@@ -1,0 +1,56 @@
+.TextArea{
+    height:90%;
+    width: 80%;
+    margin: 0 auto;
+    /* padding: 10px 0 10px 0; */
+    
+
+}
+
+.Row{
+    height:100% !important;
+    /* background-color: #333333 !important; */
+}
+.MainPage{
+    height:100vh !important;
+    background-color: rgb(255, 225, 0) !important;
+    padding: 10px;
+}
+.one{
+    /* border-left: 1%; */
+    border-color: aliceblue;
+    border-style: none solid none none;
+}
+
+
+.TextBox{
+    height:90% !important;
+    width:100%;
+    border-radius: 3%;
+    resize: none;
+    background-color: aliceblue;
+}
+
+.SubmitButtonWrapper{
+    /* margin-left:auto;
+    margin-right:0; */
+    float: right;
+    /* background-color: black; */
+}
+/* .Button{
+    margin-left:auto !important;
+    margin-right:0 !important;
+} */
+body{
+    /* background:red; */
+    background-color: rgb(255, 225, 0) !important;
+}
+
+.img{
+    height: 255px;
+    width:255px;
+}
+
+.ImageHolder{
+    background-color: aqua;
+}
