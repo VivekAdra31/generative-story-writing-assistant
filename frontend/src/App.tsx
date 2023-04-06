@@ -2,12 +2,14 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Routes, Route, Link} from "react-router-dom";
-import Layout from './components/Layout';
+import Layout from './components/MainPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Navigation from './components/Navigation';
 
 function App() {
   return (
     <div className="Routes">
+      <Navigation />
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

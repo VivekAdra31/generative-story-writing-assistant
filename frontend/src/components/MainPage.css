@@ -13,7 +13,8 @@
 }
 .MainPage{
     height:100vh !important;
-    background-color: rgb(255, 225, 0) !important;
+    /* background-color: rgb(255, 225, 0) !important; */
+    background-color: rgb(251, 219, 90) !important;
     padding: 10px;
 }
 .one{
@@ -32,18 +33,10 @@
 }
 
 .SubmitButtonWrapper{
-    /* margin-left:auto;
-    margin-right:0; */
     float: right;
-    /* background-color: black; */
 }
-/* .Button{
-    margin-left:auto !important;
-    margin-right:0 !important;
-} */
 body{
-    /* background:red; */
-    background-color: rgb(255, 225, 0) !important;
+    background-color: rgb(251, 219, 90) !important;
 }
 
 .img{
@@ -53,4 +46,8 @@ body{
 
 .ImageHolder{
     background-color: aqua;
+}
+
+.GenerateText{
+    margin-right: 5px;
 }
