@@ -1,14 +1,10 @@
-import Image from 'next/image'
-import {Inter} from 'next/font/google'
-import {Html} from "next/document";
-
-const inter = Inter({subsets: ['latin']})
+import Link from 'next/link'
 
 export default function Home() {
     return (
         <div data-theme={"night"}>
             <div className="navbar navbar-center bg-primary text-primary-content justify-center">
-                <a className="btn btn-ghost normal-case text-xl" href="/">AI StoryWriter</a>
+                <Link className="btn btn-ghost normal-case text-xl" href="/">AI StoryWriter</Link>
             </div>
             <div className="flex h-screen items-center m-8">
                 <div className="flex flex-row w-screen justify-items-center h-screen">
@@ -36,10 +32,10 @@ export default function Home() {
                         </div>
                     </div>
                     <div className="flex flex-col justify-center gap-2">
-                        <a href="#item1" className="btn btn-primary btn-xs">1</a>
-                        <a href="#item2" className="btn btn-primary btn-xs">2</a>
-                        <a href="#item3" className="btn btn-primary btn-xs">3</a>
-                        <a href="#item4" className="btn btn-primary btn-xs">4</a>
+                        <Link href="#item1" className="btn btn-primary btn-xs">1</Link>
+                        <Link href="#item2" className="btn btn-primary btn-xs">2</Link>
+                        <Link href="#item3" className="btn btn-primary btn-xs">3</Link>
+                        <Link href="#item4" className="btn btn-primary btn-xs">4</Link>
                     </div>
                 </div>
             </div>
