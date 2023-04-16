@@ -8,7 +8,7 @@ function Navigation(){
             <Container fluid>
                 <Navbar.Toggle aria-controls='responsive-navbar-nav'/>
                 <Navbar.Collapse id='reponsive-navbar-nav'>
-                    <Navbar.Brand>Story Writer?</Navbar.Brand>
+                    <Navbar.Brand>Story Writer</Navbar.Brand>
                     {/* <Nav>
                         <Nav.Link href='/'>Home</Nav.Link>
                         <Nav.Link href='/add'>Add Expense</Nav.Link>
