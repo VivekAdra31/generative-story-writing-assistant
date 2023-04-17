@@ -96,11 +96,19 @@ function MainPage() {
         // console.log("Selected text:" ,selectedText);
     }
 
-    const sendTextToBackendText = () => {
+    const sendTextToBackendText = async () => {
         console.log("Sending This Text to GPT:",selectedText);
-        const TextReturnedByChatGPT = "THIS IS THE RETURNED TEXT";
+        var TextReturnedByChatGPT = "";
+        await axios.post('http://127.0.0.1:5000/api/complete_text', {text:'selectedText'})
+          .then(function (response) {
+            console.log(response.data.text);
+            TextReturnedByChatGPT=response.data.text;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(TextReturnedByChatGPT)
         const newText = '<span class="greyed">'+TextReturnedByChatGPT+"</span>";
-
         setSuggestedText(TextReturnedByChatGPT);
         setsuggestedTextStartIndex(typedText.current.length);
         setbuttonDisabled(true);
@@ -120,10 +128,26 @@ function MainPage() {
         setbuttonDisabled(false);
     }
 
-    const sendTextToBackendImage = () => {
+    const sendTextToBackendImage = async () => {
         console.log("Sending This Text to DALLE:",textPrompt);
-        setSelectedImage(0);
+        let imageList : string[] = [];
+        await axios.post('http://127.0.0.1:5000/api/get_image', {imagePrompt:'selectedText'})
+          .then(function (response) {
+            console.log(response.data.image1);
+            imageList.push(response.data.image1);
+            imageList.push(response.data.image2);
+            imageList.push(response.data.image3);
+            imageList.push(response.data.image4);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(imageList[0]);
+        console.log(imageList[1]);
+        console.log(imageList[2]);
+        console.log(imageList[3]);
 
+        setSelectedImage(0);
     }
 
     // Fill in this function to modify word document

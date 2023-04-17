@@ -11,8 +11,7 @@ CORS(app)
 @app.route('/api/complete_text', methods=['POST'])
 @cross_origin()
 def complete_text():
-    
-    return jsonify({'message': 'Endpoint 1 called'})
+    return jsonify({'text': 'Endpoint 1 called'})
 
 @app.route('/api/get_image', methods=['POST'])
 @cross_origin()
@@ -20,7 +19,8 @@ def get_image():
     urls = {
     'image1': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgA0kNyXUrmouVwSh7VZFWOhDnNnpr5dM0qg&usqp=CAU',
     'image2': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgA0kNyXUrmouVwSh7VZFWOhDnNnpr5dM0qg&usqp=CAU',
-    'image3': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN6ZVu6IzOwyuyf724ZgLHibfZIfVW6FwhYw&usqp=CAU'
+    'image3': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN6ZVu6IzOwyuyf724ZgLHibfZIfVW6FwhYw&usqp=CAU',\
+    'image4': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN6ZVu6IzOwyuyf724ZgLHibfZIfVW6FwhYw&usqp=CAU'
     }
     return jsonify(urls)
 
