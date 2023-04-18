@@ -1,29 +1,44 @@
-import React,{useState,useRef} from 'react';
+import React,{useState,useRef,useEffect} from 'react';
 import { Container,Row,Col,Card } from 'react-bootstrap';
 import { Button,Image } from '@mantine/core';
 import './MainPage.css';
 import image from "../Images/Image.jpeg";
 import {Document,Paragraph,Packer,TextRun} from 'docx';
 import { saveAs } from "file-saver";
-import { Textarea,HoverCard,Overlay,AspectRatio,Text,Group } from '@mantine/core';
+import { Textarea,HoverCard,Overlay,AspectRatio,Text,Group,Pagination } from '@mantine/core';
 import ContentEditable from 'react-contenteditable'
 import axios from "axios";
 import { ClassNames } from '@emotion/react';
 
+interface stateHandler{
+    pageNumber:number,
+    textPrompt:string,
+    typedText:string,
+    selectedImage:number,
+    imageList: string[],
+    dataHandler:Function
+  }
 
 // Component for Main Page
-function MainPage() {
+function MainPage(currentPageInfo:stateHandler) {
 
     // Add All State Variables Here
-
+    console.log(currentPageInfo)
     // const [generatedImages,generatedImagesHandler]= useState({image1:"../Images/Image.jpeg",image2:"../Images/Image.jpeg",image3:"../Images/Image.jpeg",image4:"../Images/Image.jpeg",image5:"../Images/Image.jpeg",image6:"../Images/Image.jpeg"})
-    const [textPrompt, textPromptChangeHandler] = useState("");
+    const [textPrompt, textPromptChangeHandler] = useState(currentPageInfo.textPrompt);
     const [selectedText, selectedTextChangeHandler] = useState("");
     const [suggestedText, setSuggestedText] = useState("");
     const [suggestedTextStartIndex,setsuggestedTextStartIndex] = useState(0);
-    let typedText = useRef("");
+    let typedText = useRef(currentPageInfo.typedText);
     const [buttonDisabled, setbuttonDisabled] =  useState(false);
-    const [selectedImage,setSelectedImage] = useState(0);
+    const [selectedImage,setSelectedImage] = useState(currentPageInfo.selectedImage);
+    const [imageList,setImageList] = useState<string[]>(currentPageInfo.imageList);
+
+    useEffect(() => {
+        //Runs on the first render
+        //And any time any dependency value changes
+        currentPageInfo.dataHandler({textPrompt:textPrompt,typedText:typedText.current,selectedImage:selectedImage,imageList:imageList,dataHandler:currentPageInfo.dataHandler})
+      }, [textPrompt,typedText.current,selectedImage,imageList]);
 
     const textSaver = (evt: { target: { value: string; }; }) => {
         typedText.current = evt.target.value;
@@ -31,6 +46,7 @@ function MainPage() {
         selectedTextChangeHandler(evt.target.value);
     };
     let imageArray = [1,2];
+
     
     const imageMapperRow1 = imageArray.map((number, index) => {
         return (
@@ -99,6 +115,7 @@ function MainPage() {
     const sendTextToBackendText = async () => {
         console.log("Sending This Text to GPT:",selectedText);
         var TextReturnedByChatGPT = "";
+
         await axios.post('http://127.0.0.1:5000/api/complete_text', {text:'selectedText'})
           .then(function (response) {
             console.log(response.data.text);
@@ -130,23 +147,23 @@ function MainPage() {
 
     const sendTextToBackendImage = async () => {
         console.log("Sending This Text to DALLE:",textPrompt);
-        let imageList : string[] = [];
+        let imageArray : string[] = [];
         await axios.post('http://127.0.0.1:5000/api/get_image', {imagePrompt:'selectedText'})
           .then(function (response) {
             console.log(response.data.image1);
-            imageList.push(response.data.image1);
-            imageList.push(response.data.image2);
-            imageList.push(response.data.image3);
-            imageList.push(response.data.image4);
+            imageArray.push(response.data.image1);
+            imageArray.push(response.data.image2);
+            imageArray.push(response.data.image3);
+            imageArray.push(response.data.image4);
           })
           .catch(function (error) {
             console.log(error);
           });
-        console.log(imageList[0]);
-        console.log(imageList[1]);
-        console.log(imageList[2]);
-        console.log(imageList[3]);
-
+        console.log(imageArray[0]);
+        console.log(imageArray[1]);
+        console.log(imageArray[2]);
+        console.log(imageArray[3]);
+        setImageList(imageArray);
         setSelectedImage(0);
     }
 
@@ -175,7 +192,7 @@ function MainPage() {
     // Final App Page
     // FIX SELECTOR THING
   return (
-    <div className="MainPage">
+    <div key = {currentPageInfo.pageNumber} className="MainPage">
         <Row className = "Row" xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
             <Col className="Column one" xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
             <div className="TextArea">
@@ -220,6 +237,7 @@ function MainPage() {
             </Col>
         </Row>
                 {/* require(JSON.stringify(generatedImages.image1)) */}
+                {/* <Pagination value={activePage} onChange={setPage} total={10} />; */}
     </div>
   );
 }
