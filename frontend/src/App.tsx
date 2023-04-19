@@ -5,8 +5,8 @@ import { Routes, Route, Link} from "react-router-dom";
 import Layout from './components/MainPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigation from './components/Navigation';
-import { Textarea,HoverCard,Overlay,AspectRatio,Text,Group,Pagination,Button,Center } from '@mantine/core';
-
+import { Textarea,HoverCard,Overlay,AspectRatio,Text,Group,Pagination,Button,Center,ActionIcon } from '@mantine/core';
+import { Plus  } from 'tabler-icons-react';
 function App() {
   const [activePage, setPage] = useState(1);
   interface stateHandler{
@@ -60,13 +60,18 @@ function App() {
       </Routes>  */}
       <Layout {...states[activePage-1]} key={activePage}/>
       <Center>
+      <ActionIcon variant="transparent" disabled={true} className="plusButton">
+        </ActionIcon>
         <Pagination value={activePage} onChange={setPage} total={numPages} />
+        <ActionIcon variant="subtle" color="blue" onClick={addPageHandler} className="plusButton">
+          <Plus />
+        </ActionIcon>
       </Center>
-      <br />
-      <Center>
+      {/* <br />
+      <Center >
       <Button onClick={addPageHandler}>Add New Page</Button>
       </Center>
-      
+       */}
     </div>
 
   );

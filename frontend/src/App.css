@@ -45,6 +45,12 @@ body { padding-top: 70px; background-image: url("./Images/Background.jpg");
   background-size: cover;
   /* background-blend-mode: multiply; */
 }
+
+.plusButton{
+  margin-left:10px !important;
+  margin-right:10px !important;
+}
+
 /* .body{
   background-color: rgb(255, 225, 0) ; 
   
