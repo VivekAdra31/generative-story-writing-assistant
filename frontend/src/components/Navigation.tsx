@@ -1,4 +1,4 @@
-import { Navbar, Nav, Container,NavDropdown,Button } from 'react-bootstrap';
+import { Navbar, Nav, Container,NavDropdown,Button,Offcanvas } from 'react-bootstrap';
 import axios from "axios";
 // Highlight Current Tab
 function Navigation(){
@@ -12,25 +12,49 @@ function Navigation(){
             console.log(error);
           });
     }
+    const exportBook = () =>{
+
+    }
     return (
         <>
-        <Navbar collapseOnSelect fixed='top' expand='sm' bg='dark' variant='dark' >
+        <Navbar collapseOnSelect fixed='top' expand='false' bg='dark' variant='dark' >
             <Container fluid>
+            <Navbar.Brand>Story Writer</Navbar.Brand>
                 <Navbar.Toggle aria-controls='responsive-navbar-nav'/>
-                <Navbar.Collapse id='reponsive-navbar-nav'>
-                    <Navbar.Brand>Story Writer</Navbar.Brand>
-                    {/* <Nav>
-                        <Nav.Link href='/'>Home</Nav.Link>
-                        <Nav.Link href='/add'>Add Expense</Nav.Link>
-                        <Nav.Link href='/view'>View Expenses</Nav.Link>
-                        <Nav.Link href='/dashboard'>Dashboard</Nav.Link>
-                    </Nav> */}
+                <Navbar.Offcanvas
+              id={`offcanvasNavbar-expand-false`}
+              aria-labelledby={`offcanvasNavbarLabel-expand-false`}
+              placement="end"
+            >
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-false`}>
+                  Options for Story Writer
+                </Offcanvas.Title>
+              </Offcanvas.Header>
+              <Offcanvas.Body>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                <Nav.Item>
+                    <Button variant="outline-dark" onClick={resetChatGPT}>Reset Language Model</Button>
+                </Nav.Item>
+                <br />
+                <Nav.Item>
+                    <Button variant="outline-dark" onClick={exportBook}>Export Book</Button>
+                </Nav.Item>
+                </Nav>
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+                {/* <Navbar.Collapse id='reponsive-navbar-nav'>
+                    
                     <Nav className="ms-auto">
                     <Nav.Item>
                     <Button variant="outline-light" onClick={resetChatGPT}>Reset Language Model</Button>
                     </Nav.Item>
+                    <Nav.Item>
+                    <Button variant="outline-light" onClick={resetChatGPT}>Reset Language Model</Button>
+                    </Nav.Item>
                     </Nav>
-                </Navbar.Collapse>
+
+                </Navbar.Collapse> */}
             </Container>
         </Navbar>
         </>

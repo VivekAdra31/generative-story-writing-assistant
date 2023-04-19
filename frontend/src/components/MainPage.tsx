@@ -23,7 +23,7 @@ interface stateHandler{
 function MainPage(currentPageInfo:stateHandler) {
 
     // Add All State Variables Here
-    console.log(currentPageInfo)
+    console.log("Recieved in MainPage",currentPageInfo)
     // const [generatedImages,generatedImagesHandler]= useState({image1:"../Images/Image.jpeg",image2:"../Images/Image.jpeg",image3:"../Images/Image.jpeg",image4:"../Images/Image.jpeg",image5:"../Images/Image.jpeg",image6:"../Images/Image.jpeg"})
     const [textPrompt, textPromptChangeHandler] = useState(currentPageInfo.textPrompt);
     const [selectedText, selectedTextChangeHandler] = useState("");
@@ -37,7 +37,7 @@ function MainPage(currentPageInfo:stateHandler) {
     useEffect(() => {
         //Runs on the first render
         //And any time any dependency value changes
-        currentPageInfo.dataHandler({textPrompt:textPrompt,typedText:typedText.current,selectedImage:selectedImage,imageList:imageList,dataHandler:currentPageInfo.dataHandler})
+        currentPageInfo.dataHandler({pageNumber:currentPageInfo.pageNumber,textPrompt:textPrompt,typedText:typedText.current,selectedImage:selectedImage,imageList:imageList,dataHandler:currentPageInfo.dataHandler})
       }, [textPrompt,typedText.current,selectedImage,imageList]);
 
     const textSaver = (evt: { target: { value: string; }; }) => {
