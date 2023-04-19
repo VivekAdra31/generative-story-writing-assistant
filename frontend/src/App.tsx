@@ -1,15 +1,46 @@
-import React from 'react';
+import React,{useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Routes, Route, Link} from "react-router-dom";
 import Layout from './components/MainPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigation from './components/Navigation';
+import { Textarea,HoverCard,Overlay,AspectRatio,Text,Group,Pagination,Button,Center } from '@mantine/core';
 
 function App() {
+  const [activePage, setPage] = useState(1);
+  interface stateHandler{
+    pageNumber:number,
+    textPrompt:string,
+    typedText:string,
+    selectedImage:number,
+    imageList: string[],
+    dataHandler:Function
+  }
+  const childToParent = (childData:stateHandler) => {
+   console.log("Recieved In APP previous:",states)
+   let tempArray = states;
+   tempArray[childData.pageNumber-1] = childData;
+   statesSetter(tempArray);
+   console.log("Recieved In APP:",states)
+  }
+  const [numPages,setNumPages] = useState(1);
+  const [states,statesSetter] = useState<stateHandler[]>([{pageNumber:1,textPrompt:"",typedText:"",selectedImage:0,imageList:[],dataHandler:childToParent}])
+  const addPageHandler = () => {
+    states.push({pageNumber:numPages+1,textPrompt:"",typedText:"",selectedImage:0,imageList:[],dataHandler:childToParent});
+    console.log("Adding New Page States:",states)
+    setNumPages(numPages+1);
+  }
+
+  const changePageHandler = (newPage:number) => {
+    
+  }
+
+
   return (
     <div className="Routes">
       <Navigation />
+
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -24,9 +55,18 @@ function App() {
           Learn React
         </a>
       </header> */}
-      <Routes>
+      {/* <Routes>
         <Route path="/" element = {<Layout />}/>
-      </Routes> 
+      </Routes>  */}
+      <Layout {...states[activePage-1]} key={activePage}/>
+      <Center>
+        <Pagination value={activePage} onChange={setPage} total={numPages} />
+      </Center>
+      <br />
+      <Center>
+      <Button onClick={addPageHandler}>Add New Page</Button>
+      </Center>
+      
     </div>
 
   );
