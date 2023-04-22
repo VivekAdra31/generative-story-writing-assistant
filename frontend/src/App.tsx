@@ -27,7 +27,7 @@ function App() {
   const [numPages,setNumPages] = useState(1);
   const [states,statesSetter] = useState<stateHandler[]>([{pageNumber:1,textPrompt:"",typedText:"",selectedImage:0,imageList:[],dataHandler:childToParent}])
   const addPageHandler = () => {
-    states.push({pageNumber:numPages+1,textPrompt:"",typedText:"",selectedImage:0,imageList:[],dataHandler:childToParent});
+    states.push({pageNumber:numPages+1,textPrompt:"",typedText:"",selectedImage:0,imageList:["","","",""],dataHandler:childToParent});
     console.log("Adding New Page States:",states)
     setNumPages(numPages+1);
   }
