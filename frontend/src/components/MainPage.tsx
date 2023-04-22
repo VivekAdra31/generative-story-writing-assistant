@@ -34,6 +34,7 @@ function MainPage(currentPageInfo:stateHandler) {
     const [selectedImage,setSelectedImage] = useState(currentPageInfo.selectedImage);
     const [imageList,setImageList] = useState<string[]>(currentPageInfo.imageList);
     const [imageTest1,imageTestHandler] = useState("https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+")
+    const [rerendertrial, rerendertrialfunction] = useState(true)
 
     useEffect(() => {
         //Runs on the first render
@@ -54,7 +55,7 @@ function MainPage(currentPageInfo:stateHandler) {
         <Col key={2+number} xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} className="d-flex justify-content-center">
             <HoverCard width={320} shadow="md" withArrow openDelay={200} closeDelay={400}>
                 <HoverCard.Target>
-                <Image src={image} radius="md" withPlaceholder  onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{setSelectedImage(number)}} className={number==selectedImage?"suggestedImages Selected":"suggestedImages"}/>
+                <Image src={imageList[number-1]} radius="md" withPlaceholder  onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{setSelectedImage(number)}} className={number==selectedImage?"suggestedImages Selected":"suggestedImages"}/>
                 </HoverCard.Target>
             <HoverCard.Dropdown>
             <Group position="center">
@@ -75,7 +76,7 @@ function MainPage(currentPageInfo:stateHandler) {
         <Col key={2+number} xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} className="d-flex justify-content-center">
             <HoverCard width={320} shadow="md" withArrow openDelay={100} closeDelay={400}>
                 <HoverCard.Target>
-                <Image src={image} radius="md" withPlaceholder  onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{setSelectedImage(2+number)}} className={2+number==selectedImage?"suggestedImages Selected":"suggestedImages"}/>
+                <Image src={imageList[1+number]} radius="md" withPlaceholder  onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{setSelectedImage(2+number)}} className={2+number==selectedImage?"suggestedImages Selected":"suggestedImages"}/>
                 </HoverCard.Target>
             <HoverCard.Dropdown>
             <Group position="center">
@@ -164,10 +165,11 @@ function MainPage(currentPageInfo:stateHandler) {
         // console.log(imageArray[1]);
         // console.log(imageArray[2]);
         // console.log(imageArray[3]);
-        // setImageList(imageArray);
+        setImageList(imageList);
         console.log(imageList)
         // console.log(imageArray)
         setSelectedImage(0);
+        rerendertrialfunction(!rerendertrial);
     }
 
     // Fill in this function to modify word document
@@ -228,22 +230,8 @@ function MainPage(currentPageInfo:stateHandler) {
                {/* <textarea className="TextBoxImage" onChange={textSaverPrompt} value={textPrompt}/> */}
             </Row>
             <Row xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} >
-             {/* {imageMapperRow1} */}
+              {imageMapperRow1}
              <Col  xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} className="d-flex justify-content-center">
-            <HoverCard width={320} shadow="md" withArrow openDelay={200} closeDelay={400}>
-                <HoverCard.Target>
-                <Image key={url} src={url} radius="md" withPlaceholder  />
-                </HoverCard.Target>
-            <HoverCard.Dropdown>
-            <Group position="center">
-                <Text size="sm">
-                    Click to Select This Illustration for this Page
-                </Text>
-                {/* <Button onClick={(event:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>(console.log(number))}>Choose</Button> */}
-            </Group>
-            </HoverCard.Dropdown>
-            
-            </HoverCard>     
         </Col>
             </Row>
             
