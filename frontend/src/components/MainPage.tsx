@@ -33,6 +33,7 @@ function MainPage(currentPageInfo:stateHandler) {
     const [buttonDisabled, setbuttonDisabled] =  useState(false);
     const [selectedImage,setSelectedImage] = useState(currentPageInfo.selectedImage);
     const [imageList,setImageList] = useState<string[]>(currentPageInfo.imageList);
+    const [imageTest1,imageTestHandler] = useState("https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+")
 
     useEffect(() => {
         //Runs on the first render
@@ -151,19 +152,21 @@ function MainPage(currentPageInfo:stateHandler) {
         await axios.post('http://127.0.0.1:5000/api/get_image', {imagePrompt:'selectedText'})
           .then(function (response) {
             console.log(response.data.image1);
-            imageArray.push(response.data.image1);
-            imageArray.push(response.data.image2);
-            imageArray.push(response.data.image3);
-            imageArray.push(response.data.image4);
+            imageList[0]=response.data.image1;
+            imageList[1]=response.data.image2;
+            imageList[2]=response.data.image3;
+            imageList[3]=response.data.image4;
           })
           .catch(function (error) {
             console.log(error);
           });
-        console.log(imageArray[0]);
-        console.log(imageArray[1]);
-        console.log(imageArray[2]);
-        console.log(imageArray[3]);
-        setImageList(imageArray);
+        // console.log(imageArray[0]);
+        // console.log(imageArray[1]);
+        // console.log(imageArray[2]);
+        // console.log(imageArray[3]);
+        // setImageList(imageArray);
+        console.log(imageList)
+        // console.log(imageArray)
         setSelectedImage(0);
     }
 
@@ -191,6 +194,7 @@ function MainPage(currentPageInfo:stateHandler) {
 
     // Final App Page
     // FIX SELECTOR THING
+    const url =  imageList[0];
   return (
     <div key = {currentPageInfo.pageNumber} className="MainPage">
         <Row className = "Row" xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -224,7 +228,23 @@ function MainPage(currentPageInfo:stateHandler) {
                {/* <textarea className="TextBoxImage" onChange={textSaverPrompt} value={textPrompt}/> */}
             </Row>
             <Row xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} >
-             {imageMapperRow1}
+             {/* {imageMapperRow1} */}
+             <Col  xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} className="d-flex justify-content-center">
+            <HoverCard width={320} shadow="md" withArrow openDelay={200} closeDelay={400}>
+                <HoverCard.Target>
+                <Image key={url} src={url} radius="md" withPlaceholder  />
+                </HoverCard.Target>
+            <HoverCard.Dropdown>
+            <Group position="center">
+                <Text size="sm">
+                    Click to Select This Illustration for this Page
+                </Text>
+                {/* <Button onClick={(event:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>(console.log(number))}>Choose</Button> */}
+            </Group>
+            </HoverCard.Dropdown>
+            
+            </HoverCard>     
+        </Col>
             </Row>
             
             <Row xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} >

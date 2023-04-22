@@ -17,10 +17,10 @@ def complete_text():
 @cross_origin()
 def get_image():
     urls = {
-    'image1': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgA0kNyXUrmouVwSh7VZFWOhDnNnpr5dM0qg&usqp=CAU',
-    'image2': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgA0kNyXUrmouVwSh7VZFWOhDnNnpr5dM0qg&usqp=CAU',
-    'image3': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN6ZVu6IzOwyuyf724ZgLHibfZIfVW6FwhYw&usqp=CAU',\
-    'image4': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN6ZVu6IzOwyuyf724ZgLHibfZIfVW6FwhYw&usqp=CAU'
+    'image1': 'https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+',
+    'image2': 'https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+',
+    'image3': 'https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+',
+    'image4': 'https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+'
     }
     return jsonify(urls)
 
