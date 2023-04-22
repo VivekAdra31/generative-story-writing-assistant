@@ -39,7 +39,7 @@ function App() {
 
   return (
     <div className="Routes">
-      <Navigation />
+      <Navigation {...states}/>
 
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />

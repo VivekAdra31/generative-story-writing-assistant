@@ -1,7 +1,20 @@
 import { Navbar, Nav, Container,NavDropdown,Button,Offcanvas } from 'react-bootstrap';
 import axios from "axios";
+import {Document,Paragraph,Packer,TextRun, SectionType} from 'docx';
+import { saveAs } from "file-saver";
 // Highlight Current Tab
-function Navigation(){
+interface stateHandler{
+  pageNumber:number,
+  textPrompt:string,
+  typedText:string,
+  selectedImage:number,
+  imageList: string[],
+  dataHandler:Function
+}
+
+function Navigation(childData:stateHandler[]){
+  
+
     // const [current,setCurrent] = useState('')
     const resetChatGPT = async () =>{
         await axios.post('http://127.0.0.1:5000/api/reset_chatgpt', {chatGPT:'reset'})
@@ -12,8 +25,31 @@ function Navigation(){
             console.log(error);
           });
     }
-    const exportBook = () =>{
 
+    const exportBook = () =>{
+        const doc = new Document({
+                        sections: [{
+                            properties: {},
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun(childData[0].typedText)
+                                    ],
+                                 }),
+                            ],
+                         },]
+                    });
+
+        // let doc = new Document();
+        // doc.addSection();
+
+        // const docx = require("docx");
+    
+        // Packer.toBlob(doc).then(blob => {
+        //   console.log(blob);
+        //   saveAs(blob, "Book.docx");
+        //   console.log("Document created successfully");
+        // });
     }
     return (
         <>
