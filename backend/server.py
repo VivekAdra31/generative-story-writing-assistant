@@ -17,10 +17,10 @@ def complete_text():
 @cross_origin()
 def get_image():
     urls = {
-    'image1': 'https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+',
-    'image2': 'https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+',
-    'image3': 'https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+',
-    'image4': 'https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+'
+    'image1': 'https://picsum.photos/id/1/256/256',
+    'image2': 'https://picsum.photos/id/2/256/256',
+    'image3': 'https://picsum.photos/id/3/256/256',
+    'image4': 'https://picsum.photos/id/4/256/256'
     }
     return jsonify(urls)
 
