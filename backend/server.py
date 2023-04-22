@@ -1,9 +1,10 @@
 from flask import Flask, jsonify, request, send_file
 import numpy as np
-import requests
 from flask_cors import CORS, cross_origin
-from chadgpt import return_response
 import json
+import openai
+import os
+from chadgpt import return_response
 
 
 model = None
@@ -20,13 +21,12 @@ def complete_text():
 @app.route('/api/get_image', methods=['POST'])
 @cross_origin()
 def get_image():
-    urls = {
-    'image1': 'https://picsum.photos/id/1/256/256',
-    'image2': 'https://picsum.photos/id/2/256/256',
-    'image3': 'https://picsum.photos/id/3/256/256',
-    'image4': 'https://picsum.photos/id/4/256/256'
-    }
-    return jsonify(urls)
+    print(request.data)
+    data = json.loads(request.data)
+    dalle_prompt_text = data['imagePrompt']
+    API_KEY = os.environ['OPENAI_API_KEY']
+    dalle_data = openai.Image.create(api_key=API_KEY, prompt = dalle_prompt_text, n=4, size='256x256')
+    return jsonify({f'image{i+1}':item['url'] for i, item in enumerate(dalle_data['data'])})
 
 @app.route('/api/reset_chatgpt', methods=['POST'])
 @cross_origin()
