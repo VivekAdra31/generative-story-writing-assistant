@@ -24,5 +24,10 @@ def get_image():
     }
     return jsonify(urls)
 
+@app.route('/api/reset_chatgpt', methods=['POST'])
+@cross_origin()
+def complete_text():
+    return jsonify({'text': 'Chatgpt reset'})
+
 if __name__ == '__main__':
     app.run(debug=True)
