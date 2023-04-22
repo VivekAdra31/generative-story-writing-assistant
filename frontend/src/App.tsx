@@ -39,7 +39,7 @@ function App() {
 
   return (
     <div className="Routes">
-      <Navigation />
+      <Navigation {...states}/>
 
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -58,14 +58,18 @@ function App() {
       {/* <Routes>
         <Route path="/" element = {<Layout />}/>
       </Routes>  */}
-      <Layout {...states[activePage-1]} key={activePage}/>
-      <Center>
-      <ActionIcon variant="transparent" disabled={true} className="plusButton">
-        </ActionIcon>
-        <Pagination value={activePage} onChange={setPage} total={numPages} />
-        <ActionIcon variant="subtle" color="blue" onClick={addPageHandler} className="plusButton">
-          <Plus />
-        </ActionIcon>
+        {/*<div className="flex">*/}
+            <Layout {...states[activePage-1]} key={activePage}/>
+        {/*</div>*/}
+      <Center className="py-5">
+          {/*<div className="flex">*/}
+              <ActionIcon variant="transparent" disabled={true} className="plusButton">
+              </ActionIcon>
+              <Pagination value={activePage} onChange={setPage} total={numPages} />
+              <ActionIcon variant="subtle" color="blue" onClick={addPageHandler} className="plusButton">
+                  <Plus />
+              </ActionIcon>
+          {/*</div>*/}
       </Center>
       {/* <br />
       <Center >

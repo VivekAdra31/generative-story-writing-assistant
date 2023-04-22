@@ -55,7 +55,7 @@ function MainPage(currentPageInfo:stateHandler) {
         <Col key={2+number} xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} className="d-flex justify-content-center">
             <HoverCard width={320} shadow="md" withArrow openDelay={200} closeDelay={400}>
                 <HoverCard.Target>
-                <Image src={imageList[number-1]} radius="md" withPlaceholder  onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{setSelectedImage(number)}} className={number==selectedImage?"suggestedImages Selected":"suggestedImages"}/>
+                <Image src={imageList[number-1]} radius="md"  onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{setSelectedImage(number)}} className={number==selectedImage?"suggestedImages Selected":"suggestedImages"}/>
                 </HoverCard.Target>
             <HoverCard.Dropdown>
             <Group position="center">
@@ -76,7 +76,7 @@ function MainPage(currentPageInfo:stateHandler) {
         <Col key={2+number} xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} className="d-flex justify-content-center">
             <HoverCard width={320} shadow="md" withArrow openDelay={100} closeDelay={400}>
                 <HoverCard.Target>
-                <Image src={imageList[1+number]} radius="md" withPlaceholder  onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{setSelectedImage(2+number)}} className={2+number==selectedImage?"suggestedImages Selected":"suggestedImages"}/>
+                <Image src={imageList[1+number]} radius="md"  onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{setSelectedImage(2+number)}} className={2+number==selectedImage?"suggestedImages Selected":"suggestedImages"}/>
                 </HoverCard.Target>
             <HoverCard.Dropdown>
             <Group position="center">
@@ -118,7 +118,7 @@ function MainPage(currentPageInfo:stateHandler) {
         console.log("Sending This Text to GPT:",selectedText);
         var TextReturnedByChatGPT = "";
 
-        await axios.post('http://127.0.0.1:5000/api/complete_text', {text:'selectedText'})
+        await axios.post('http://127.0.0.1:5000/api/complete_text', {'text':'Write a short story in 200 words'})
           .then(function (response) {
             console.log(response.data.text);
             TextReturnedByChatGPT=response.data.text;
