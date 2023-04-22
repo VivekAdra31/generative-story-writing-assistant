@@ -118,7 +118,7 @@ function MainPage(currentPageInfo:stateHandler) {
         console.log("Sending This Text to GPT:",selectedText);
         var TextReturnedByChatGPT = "";
 
-        await axios.post('http://127.0.0.1:5000/api/complete_text', {text:'selectedText'})
+        await axios.post('http://127.0.0.1:5000/api/complete_text', {'text':'Write a short story in 200 words'})
           .then(function (response) {
             console.log(response.data.text);
             TextReturnedByChatGPT=response.data.text;
