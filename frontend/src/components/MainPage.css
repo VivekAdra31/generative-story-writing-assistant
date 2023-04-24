@@ -12,7 +12,7 @@
     /* background-color: #333333 !important; */
 }
 .MainPage{
-    height:100vh !important;
+    /* height:100vh !important; */
     /* background-color: rgb(255, 225, 0) !important; */
     /* background-color: rgb(251, 219, 90) !important; */
     padding: 10px;
@@ -24,6 +24,9 @@
     border-style: none solid none none;
 }
 
+.dark{
+    background-color: rgb(117, 117, 117);
+}
 
 .TextBox{
     height:90% !important;

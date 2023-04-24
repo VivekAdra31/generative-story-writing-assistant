@@ -61,7 +61,7 @@ function App() {
         <div>
             <Layout {...states[activePage-1]} key={activePage}/>
         </div>
-      <Center className="py-5">
+      <Center>
           {/*<div className="flex">*/}
               <ActionIcon variant="transparent" disabled={true} className="plusButton">
               </ActionIcon>
