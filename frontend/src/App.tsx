@@ -58,9 +58,9 @@ function App() {
       {/* <Routes>
         <Route path="/" element = {<Layout />}/>
       </Routes>  */}
-        {/*<div className="flex">*/}
+        <div>
             <Layout {...states[activePage-1]} key={activePage}/>
-        {/*</div>*/}
+        </div>
       <Center className="py-5">
           {/*<div className="flex">*/}
               <ActionIcon variant="transparent" disabled={true} className="plusButton">
