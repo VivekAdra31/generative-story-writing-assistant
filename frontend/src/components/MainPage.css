@@ -8,14 +8,16 @@
 }
 
 .Row{
-    height:100% !important;
+    min-height:90vh !important;
     /* background-color: #333333 !important; */
 }
 .MainPage{
-    /* height:100vh !important; */
+    /* height:92vh !important;
+     */
     /* background-color: rgb(255, 225, 0) !important; */
     /* background-color: rgb(251, 219, 90) !important; */
     padding: 10px;
+    min-height: 90vh !important; 
     /* box-shadow: inset 0 0 0 2000px rgba(252, 203, 9, 0.763); */
 }
 .one{
