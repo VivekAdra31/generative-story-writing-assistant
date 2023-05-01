@@ -40,15 +40,80 @@ function App() {
 
     // Fetch Image from first page to test
     const blob = await fetch(
-      states[0].imageList[0]
-    ).then((r) => console.log(r));
+      "https://cors-anywhere.herokuapp.com/"+states[0].imageList[0],{
+        method: "GET",
+        headers: {}
+      }
+    ).then((r) => r.blob());
 
     // Putting Text from Every Page into a Paragraph 
     const paragraphArray: Paragraph[] = [];
+    
+    // paragraphArray.push(new Paragraph({
+    //   children: [
+    //     new ImageRun({
+    //       data: await blob.arrayBuffer(),
+    //       transformation: {
+    //         width: 256,
+    //         height: 256,
+    //       },
+    //     }),
+    //   ],
+    // }));
 
-    states.forEach((arrayItem:stateHandler)=>{
-      paragraphArray.push(new Paragraph(arrayItem.typedText));
-    })
+    // paragraphArray.push(new Paragraph({
+    //   children: [
+    //     new ImageRun({
+    //       data: await blob.arrayBuffer(),
+    //       transformation: {
+    //         width: 256,
+    //         height: 256,
+    //       },
+    //     }),
+    //   ],
+    // }));
+
+    // states.forEach(async (arrayItem:stateHandler)=>{
+    //   // paragraphArray.push(new Paragraph(arrayItem.typedText));
+    //   paragraphArray.push(new Paragraph({
+    //     children: [
+    //       new ImageRun({
+    //         data: await blob.arrayBuffer(),
+    //         transformation: {
+    //           width: 256,
+    //           height: 256,
+    //         },
+    //       }),
+    //     ],
+    //   }))
+    // })
+    
+    for (let item of states) {
+      paragraphArray.push(new Paragraph(item.typedText));
+
+      if(item.selectedImage>0){
+        const blob = await fetch(
+          "https://cors-anywhere.herokuapp.com/"+item.imageList[item.selectedImage-1],{
+            method: "GET",
+            headers: {}
+          }
+        ).then((r) => r.blob());
+
+        paragraphArray.push(new Paragraph({
+          children: [
+            new ImageRun({
+              data: await blob.arrayBuffer(),
+              transformation: {
+                width: 256,
+                height: 256,
+              },
+            }),
+          ],
+        }));
+      }
+    }
+
+    console.log(paragraphArray);
   
     // Creating a Document with all the Paragraphs
     const doc = new Document({
