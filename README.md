@@ -1,2 +1,4 @@
 # HELLO
-Website Link - https://generative-story-writing-assistant.vercel.app/
+For Checking out the error in exporting book look at exportBook function on line 38 in App.tsx
+
+

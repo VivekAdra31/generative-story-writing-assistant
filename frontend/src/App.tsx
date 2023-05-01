@@ -7,6 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigation from './components/Navigation';
 import { Textarea,HoverCard,Overlay,AspectRatio,Text,Group,Pagination,Button,Center,ActionIcon } from '@mantine/core';
 import { Plus  } from 'tabler-icons-react';
+import {Document,Paragraph,Packer,TextRun, SectionType,ImageRun } from 'docx';
+import { saveAs } from "file-saver";
+
 function App() {
   const [activePage, setPage] = useState(1);
   interface stateHandler{
@@ -31,6 +34,39 @@ function App() {
     console.log("Adding New Page States:",states)
     setNumPages(numPages+1);
   }
+
+  // Fake Export Button to get it working
+  const exportBook = async() => {
+
+    // Fetch Image from first page to test
+    const blob = await fetch(
+      states[0].imageList[0]
+    ).then((r) => console.log(r));
+
+    // Putting Text from Every Page into a Paragraph 
+    const paragraphArray: Paragraph[] = [];
+
+    states.forEach((arrayItem:stateHandler)=>{
+      paragraphArray.push(new Paragraph(arrayItem.typedText));
+    })
+  
+    // Creating a Document with all the Paragraphs
+    const doc = new Document({
+      sections: [
+        {
+          children: paragraphArray,
+        },
+      ],
+    });
+  
+    // Downloading the document
+    Packer.toBlob(doc).then((blob) => {
+      console.log(blob);
+      saveAs(blob, 'example.docx');
+      console.log('Document created successfully');
+    });
+  }
+
 
   const changePageHandler = (newPage:number) => {
     
@@ -71,6 +107,7 @@ function App() {
               </ActionIcon>
           {/*</div>*/}
       </Center>
+      <Button onClick={exportBook}>Export Book</Button>
       {/* <br />
       <Center >
       <Button onClick={addPageHandler}>Add New Page</Button>

@@ -46,9 +46,6 @@ const generateFromUrl = async() => {
 }
 
 function Navigation(childData:stateHandler[]){
-  
-
-  
     // const [current,setCurrent] = useState('')
     const resetChatGPT = async () =>{
         await axios.post('http://127.0.0.1:5000/api/reset_chatgpt', {chatGPT:'reset'})
