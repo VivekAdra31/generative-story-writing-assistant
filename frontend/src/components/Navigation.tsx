@@ -12,40 +12,8 @@ interface stateHandler{
   dataHandler:Function
 }
 
-const generateFromUrl = async() => {
-  const blob = await fetch(
-    'https://raw.githubusercontent.com/dolanmiu/docx/master/demo/images/cat.jpg'
-  ).then((r) => r.blob());
-
-  const doc = new Document({
-    sections: [
-      {
-        children: [
-          new Paragraph('Hello World'),
-          new Paragraph({
-            children: [
-              new ImageRun({
-                data: await blob.arrayBuffer(),
-                transformation: {
-                  width: 100,
-                  height: 100,
-                },
-              }),
-            ],
-          }),
-        ],
-      },
-    ],
-  });
-
-  Packer.toBlob(doc).then((blob) => {
-    console.log(blob);
-    saveAs(blob, 'example.docx');
-    console.log('Document created successfully');
-  });
-}
-
-function Navigation(childData:stateHandler[]){
+function Navigation(childData:any){
+    console.log("Recieved in NavBar",childData)
     // const [current,setCurrent] = useState('')
     const resetChatGPT = async () =>{
         await axios.post('http://127.0.0.1:5000/api/reset_chatgpt', {chatGPT:'reset'})
@@ -59,86 +27,100 @@ function Navigation(childData:stateHandler[]){
 
     
 
-    const exportBook = async () =>{
+    const exportBook = async() => {
 
-      let paragraphArray: Paragraph[] = [];
-      console.log(childData)
-      for (const i in childData){
-        console.log("Looping")
-        // let chosen = childData[i].selectedImage;
-        let chosen = 1;
-        if(chosen>0){
-        const imageBlob = await fetch(
-          childData[i].imageList[chosen-1]
-        ).then(r => r.blob());
-
-        let paragraph = new Paragraph({
-          children: [new TextRun(childData[i].typedText),
-          new ImageRun({
-            data: await imageBlob.arrayBuffer(),
-            transformation: {
-              width: 256,
-              height: 256
-            }
-          })
-        ],
-        });
-
-        paragraphArray.push(paragraph);
-        console.log(paragraphArray)
-      
-      }
-      else{
-        let paragraph = new Paragraph({
-          children: [new TextRun(childData[i].typedText),
-        ],
-        });
-        paragraphArray.push(paragraph);
-      }
-      }
-      // const imageBlob = await fetch(
-      //   "https://raw.githubusercontent.com/dolanmiu/docx/master/demo/images/cat.jpg"
-      // ).then(r => r.blob());
-
-
+      // Fetch Image from first page to test
+      // const blob = await fetch(
+      //   "https://cors-anywhere.herokuapp.com/"+states[0].imageList[0],{
+      //     method: "GET",
+      //     headers: {}
+      //   }
+      // ).then((r) => r.blob());
   
+      // Putting Text from Every Page into a Paragraph 
+      const paragraphArray: Paragraph[] = [];
       
-      // const paragraph = new Paragraph({
-      //   children: [new TextRun("Lorem Ipsum Foo Bar"), new TextRun("Hello World"),
-      //   new ImageRun({
-      //     data: await imageBlob.arrayBuffer(),
-      //     transformation: {
-      //       width: 100,
-      //       height: 100
-      //     }
-      //   })
-      // ],
-      // });
-        // const doc = new Document({
-        //                 sections: [{
-        //                     properties: {},
-        //                     children: [
-        //                         paragraph,paragraph
-        //                     ],
-        //                  },
-        //                 ]
-        //             });
-
-        console.log(paragraphArray)
-
-         const doc = new Document({
-                        sections: [{
-                            properties: {},
-                            children: paragraphArray,
-                         },
-                        ]
-                    });
+      // paragraphArray.push(new Paragraph({
+      //   children: [
+      //     new ImageRun({
+      //       data: await blob.arrayBuffer(),
+      //       transformation: {
+      //         width: 256,
+      //         height: 256,
+      //       },
+      //     }),
+      //   ],
+      // }));
+  
+      // paragraphArray.push(new Paragraph({
+      //   children: [
+      //     new ImageRun({
+      //       data: await blob.arrayBuffer(),
+      //       transformation: {
+      //         width: 256,
+      //         height: 256,
+      //       },
+      //     }),
+      //   ],
+      // }));
+  
+      // states.forEach(async (arrayItem:stateHandler)=>{
+      //   // paragraphArray.push(new Paragraph(arrayItem.typedText));
+      //   paragraphArray.push(new Paragraph({
+      //     children: [
+      //       new ImageRun({
+      //         data: await blob.arrayBuffer(),
+      //         transformation: {
+      //           width: 256,
+      //           height: 256,
+      //         },
+      //       }),
+      //     ],
+      //   }))
+      // })
+      console.log(childData)
+      for (let i in childData) {
+        paragraphArray.push(new Paragraph(childData[i].typedText));
+  
+        if(childData[i].selectedImage>0){
+          const blob = await fetch(
+            "https://cors-anywhere.herokuapp.com/"+childData[i].imageList[childData[i].selectedImage-1],{
+              method: "GET",
+              headers: {}
+            }
+          ).then((r) => r.blob());
+  
+          paragraphArray.push(new Paragraph({
+            children: [
+              new ImageRun({
+                data: await blob.arrayBuffer(),
+                transformation: {
+                  width: 256,
+                  height: 256,
+                },
+              }),
+            ],
+          }));
+        }
+      }
+  
+      console.log(paragraphArray);
     
-        Packer.toBlob(doc).then(blob => {
-          console.log(blob);
-          saveAs(blob, "Book.docx");
-          console.log("Document created successfully");
-        });
+      // Creating a Document with all the Paragraphs
+      const doc = new Document({
+        sections: [
+          {
+            children: paragraphArray,
+          },
+        ],
+      });
+    
+      // Downloading the document
+      Packer.toBlob(doc).then((blob) => {
+        console.log(blob);
+        saveAs(blob, 'example.docx');
+        console.log('Document created successfully');
+      });
     }
     return (
         <>

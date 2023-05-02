@@ -12,6 +12,7 @@ import { saveAs } from "file-saver";
 
 function App() {
   const [activePage, setPage] = useState(1);
+  const [keyNav,keyNavSetter] = useState(true);
   interface stateHandler{
     pageNumber:number,
     textPrompt:string,
@@ -26,6 +27,7 @@ function App() {
    tempArray[childData.pageNumber-1] = childData;
    statesSetter(tempArray);
    console.log("Recieved In APP:",states)
+   keyNavSetter(!keyNav)
   }
   const [numPages,setNumPages] = useState(1);
   const [states,statesSetter] = useState<stateHandler[]>([{pageNumber:1,textPrompt:"",typedText:"",selectedImage:0,imageList:[],dataHandler:childToParent}])
@@ -35,102 +37,102 @@ function App() {
     setNumPages(numPages+1);
   }
 
-  // Fake Export Button to get it working
-  const exportBook = async() => {
+  // // Fake Export Button to get it working
+  // const exportBook = async() => {
 
-    // Fetch Image from first page to test
-    const blob = await fetch(
-      "https://cors-anywhere.herokuapp.com/"+states[0].imageList[0],{
-        method: "GET",
-        headers: {}
-      }
-    ).then((r) => r.blob());
+  //   // Fetch Image from first page to test
+  //   // const blob = await fetch(
+  //   //   "https://cors-anywhere.herokuapp.com/"+states[0].imageList[0],{
+  //   //     method: "GET",
+  //   //     headers: {}
+  //   //   }
+  //   // ).then((r) => r.blob());
 
-    // Putting Text from Every Page into a Paragraph 
-    const paragraphArray: Paragraph[] = [];
+  //   // Putting Text from Every Page into a Paragraph 
+  //   const paragraphArray: Paragraph[] = [];
     
-    // paragraphArray.push(new Paragraph({
-    //   children: [
-    //     new ImageRun({
-    //       data: await blob.arrayBuffer(),
-    //       transformation: {
-    //         width: 256,
-    //         height: 256,
-    //       },
-    //     }),
-    //   ],
-    // }));
+  //   // paragraphArray.push(new Paragraph({
+  //   //   children: [
+  //   //     new ImageRun({
+  //   //       data: await blob.arrayBuffer(),
+  //   //       transformation: {
+  //   //         width: 256,
+  //   //         height: 256,
+  //   //       },
+  //   //     }),
+  //   //   ],
+  //   // }));
 
-    // paragraphArray.push(new Paragraph({
-    //   children: [
-    //     new ImageRun({
-    //       data: await blob.arrayBuffer(),
-    //       transformation: {
-    //         width: 256,
-    //         height: 256,
-    //       },
-    //     }),
-    //   ],
-    // }));
+  //   // paragraphArray.push(new Paragraph({
+  //   //   children: [
+  //   //     new ImageRun({
+  //   //       data: await blob.arrayBuffer(),
+  //   //       transformation: {
+  //   //         width: 256,
+  //   //         height: 256,
+  //   //       },
+  //   //     }),
+  //   //   ],
+  //   // }));
 
-    // states.forEach(async (arrayItem:stateHandler)=>{
-    //   // paragraphArray.push(new Paragraph(arrayItem.typedText));
-    //   paragraphArray.push(new Paragraph({
-    //     children: [
-    //       new ImageRun({
-    //         data: await blob.arrayBuffer(),
-    //         transformation: {
-    //           width: 256,
-    //           height: 256,
-    //         },
-    //       }),
-    //     ],
-    //   }))
-    // })
+  //   // states.forEach(async (arrayItem:stateHandler)=>{
+  //   //   // paragraphArray.push(new Paragraph(arrayItem.typedText));
+  //   //   paragraphArray.push(new Paragraph({
+  //   //     children: [
+  //   //       new ImageRun({
+  //   //         data: await blob.arrayBuffer(),
+  //   //         transformation: {
+  //   //           width: 256,
+  //   //           height: 256,
+  //   //         },
+  //   //       }),
+  //   //     ],
+  //   //   }))
+  //   // })
     
-    for (let item of states) {
-      paragraphArray.push(new Paragraph(item.typedText));
+  //   for (let item of states) {
+  //     paragraphArray.push(new Paragraph(item.typedText));
 
-      if(item.selectedImage>0){
-        const blob = await fetch(
-          "https://cors-anywhere.herokuapp.com/"+item.imageList[item.selectedImage-1],{
-            method: "GET",
-            headers: {}
-          }
-        ).then((r) => r.blob());
+  //     if(item.selectedImage>0){
+  //       const blob = await fetch(
+  //         "https://cors-anywhere.herokuapp.com/"+item.imageList[item.selectedImage-1],{
+  //           method: "GET",
+  //           headers: {}
+  //         }
+  //       ).then((r) => r.blob());
 
-        paragraphArray.push(new Paragraph({
-          children: [
-            new ImageRun({
-              data: await blob.arrayBuffer(),
-              transformation: {
-                width: 256,
-                height: 256,
-              },
-            }),
-          ],
-        }));
-      }
-    }
+  //       paragraphArray.push(new Paragraph({
+  //         children: [
+  //           new ImageRun({
+  //             data: await blob.arrayBuffer(),
+  //             transformation: {
+  //               width: 256,
+  //               height: 256,
+  //             },
+  //           }),
+  //         ],
+  //       }));
+  //     }
+  //   }
 
-    console.log(paragraphArray);
+  //   console.log(paragraphArray);
   
-    // Creating a Document with all the Paragraphs
-    const doc = new Document({
-      sections: [
-        {
-          children: paragraphArray,
-        },
-      ],
-    });
+  //   // Creating a Document with all the Paragraphs
+  //   const doc = new Document({
+  //     sections: [
+  //       {
+  //         children: paragraphArray,
+  //       },
+  //     ],
+  //   });
   
-    // Downloading the document
-    Packer.toBlob(doc).then((blob) => {
-      console.log(blob);
-      saveAs(blob, 'example.docx');
-      console.log('Document created successfully');
-    });
-  }
+  //   // Downloading the document
+  //   Packer.toBlob(doc).then((blob) => {
+  //     console.log(blob);
+  //     saveAs(blob, 'example.docx');
+  //     console.log('Document created successfully');
+  //   });
+  // }
 
 
   const changePageHandler = (newPage:number) => {
@@ -140,25 +142,9 @@ function App() {
 
   return (
     <div className="Routes">
-      <Navigation {...states}/>
-
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      {/* <Routes>
-        <Route path="/" element = {<Layout />}/>
-      </Routes>  */}
+      <div>
+          <Navigation {...states}/>
+      </div>
         <div>
             <Layout {...states[activePage-1]} key={activePage}/>
         </div>
@@ -172,7 +158,6 @@ function App() {
               </ActionIcon>
           {/*</div>*/}
       </Center>
-      <Button onClick={exportBook}>Export Book</Button>
       {/* <br />
       <Center >
       <Button onClick={addPageHandler}>Add New Page</Button>

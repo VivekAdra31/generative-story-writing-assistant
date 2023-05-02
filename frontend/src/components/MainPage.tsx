@@ -23,7 +23,7 @@ interface stateHandler{
 function MainPage(currentPageInfo:stateHandler) {
 
     // Add All State Variables Here
-    // console.log("Recieved in MainPage",currentPageInfo)
+    console.log("Recieved in MainPage",currentPageInfo)
     // const [generatedImages,generatedImagesHandler]= useState({image1:"../Images/Image.jpeg",image2:"../Images/Image.jpeg",image3:"../Images/Image.jpeg",image4:"../Images/Image.jpeg",image5:"../Images/Image.jpeg",image6:"../Images/Image.jpeg"})
     
     const [textPrompt, textPromptChangeHandler] = useState(currentPageInfo.textPrompt);
