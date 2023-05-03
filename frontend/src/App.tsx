@@ -1,26 +1,29 @@
 import React,{useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Routes, Route, Link} from "react-router-dom";
 import Layout from './components/MainPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigation from './components/Navigation';
-import { Textarea,HoverCard,Overlay,AspectRatio,Text,Group,Pagination,Button,Center,ActionIcon } from '@mantine/core';
+import { Text,Pagination,Center,ActionIcon,Modal,List} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { Plus  } from 'tabler-icons-react';
-import {Document,Paragraph,Packer,TextRun, SectionType,ImageRun } from 'docx';
-import { saveAs } from "file-saver";
+
+interface stateHandler{
+  pageNumber:number,
+  textPrompt:string,
+  typedText:string,
+  selectedImage:number,
+  imageList: string[],
+  dataHandler:Function
+}
 
 function App() {
+
   const [activePage, setPage] = useState(1);
   const [keyNav,keyNavSetter] = useState(true);
-  interface stateHandler{
-    pageNumber:number,
-    textPrompt:string,
-    typedText:string,
-    selectedImage:number,
-    imageList: string[],
-    dataHandler:Function
-  }
+  const [numPages,setNumPages] = useState(1);
+  const [opened, { open, close }] = useDisclosure(true);
+
+  
   const childToParent = (childData:stateHandler) => {
    console.log("Recieved In APP previous:",states)
    let tempArray = states;
@@ -29,8 +32,9 @@ function App() {
    console.log("Recieved In APP:",states)
    keyNavSetter(!keyNav)
   }
-  const [numPages,setNumPages] = useState(1);
-  const [states,statesSetter] = useState<stateHandler[]>([{pageNumber:1,textPrompt:"",typedText:"",selectedImage:0,imageList:[],dataHandler:childToParent}])
+
+  const [states,statesSetter] = useState<stateHandler[]>([{pageNumber:1,textPrompt:"",typedText:"",selectedImage:0,imageList:[],dataHandler:childToParent}]);
+
   const addPageHandler = () => {
     states.push({pageNumber:numPages+1,textPrompt:"",typedText:"",selectedImage:0,imageList:["","","",""],dataHandler:childToParent});
     console.log("Adding New Page States:",states)
@@ -134,35 +138,56 @@ function App() {
   //   });
   // }
 
-
-  const changePageHandler = (newPage:number) => {
-    
-  }
-
-
   return (
     <div className="Routes">
+      <Modal.Root opened={opened} onClose={close} size="auto" centered>
+        <Modal.Overlay />
+        <Modal.Content>
+          <Modal.Header>
+            <Modal.Title>
+              <Text
+                variant="gradient"
+                gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+                sx={{ fontFamily: 'Greycliff CF, sans-serif' }}
+                ta="center"
+                fz="xl"
+                fw={700}
+              >
+                Generative Story Writer
+              </Text>
+            </Modal.Title>
+          <Modal.CloseButton />
+        </Modal.Header>
+        <Modal.Body>
+          <List>
+            <List.Item>Generative Story Writer is a Generative Machine Learning-based application that uses GPT-3 to generate text and DALLE-2 to generate Images.</List.Item>
+            <List.Item>Users can use GPT-3 to autocomplete pieces of text and use the text as a basis for their writing or to spur different ideas for their own writing.</List.Item>
+            <List.Item>Users can use DALLE to to suggest illustrations for their writing and thus use those images directly or as inspiration for their own illustrations.</List.Item>
+            <List.Item>Disclaimers:
+              <List withPadding listStyleType="disc">
+              <List.Item>Generative-AI models generate content based on the prompt given and the data they have been trained upon.</List.Item>
+              <List.Item>It may occasionally produce, wrong, harmful or biased content.</List.Item>
+              <List.Item>All creators must ensure they use these tools responsibly to ensure fair and safe content is produced.</List.Item>
+              </List>
+            </List.Item>
+          </List>
+        </Modal.Body>
+        </Modal.Content>
+      </Modal.Root>
       <div>
           <Navigation {...states}/>
       </div>
-        <div>
-            <Layout {...states[activePage-1]} key={activePage}/>
-        </div>
+      <div>
+          <Layout {...states[activePage-1]} key={activePage}/>
+      </div>
       <Center>
-          {/*<div className="flex">*/}
               <ActionIcon variant="transparent" disabled={true} className="plusButton">
               </ActionIcon>
               <Pagination value={activePage} onChange={setPage} total={numPages} />
               <ActionIcon variant="subtle" color="blue" onClick={addPageHandler} className="plusButton">
                   <Plus />
               </ActionIcon>
-          {/*</div>*/}
       </Center>
-      {/* <br />
-      <Center >
-      <Button onClick={addPageHandler}>Add New Page</Button>
-      </Center>
-       */}
     </div>
 
   );

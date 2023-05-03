@@ -1,14 +1,11 @@
 import React,{useState,useRef,useEffect} from 'react';
-import { Container,Row,Col,Card } from 'react-bootstrap';
+import { Row,Col } from 'react-bootstrap';
 import { Button,Image } from '@mantine/core';
 import './MainPage.css';
-import image from "../Images/Image.jpeg";
-import {Document,Paragraph,Packer,TextRun} from 'docx';
-import { saveAs } from "file-saver";
-import { Textarea,HoverCard,Overlay,AspectRatio,Text,Group,Pagination } from '@mantine/core';
+import { Textarea,HoverCard,Text,Group } from '@mantine/core';
 import ContentEditable from 'react-contenteditable'
 import axios from "axios";
-import { ClassNames } from '@emotion/react';
+
 
 interface stateHandler{
     pageNumber:number,
@@ -34,7 +31,7 @@ function MainPage(currentPageInfo:stateHandler) {
     const [buttonDisabled, setbuttonDisabled] =  useState(false);
     const [selectedImage,setSelectedImage] = useState(currentPageInfo.selectedImage);
     const [imageList,setImageList] = useState<string[]>(currentPageInfo.imageList);
-    const [imageTest1,imageTestHandler] = useState("https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+")
+    // const [imageTest1,imageTestHandler] = useState("https://img.toolstud.io/240x240/3b5998/fff&text=+255x255+")
     const [rerendertrial, rerendertrialfunction] = useState(true)
 
     useEffect(() => {
@@ -163,7 +160,6 @@ function MainPage(currentPageInfo:stateHandler) {
     // Functions that send the Image Prompt to the Backend
     const sendTextToBackendImage = async () => {
         console.log("Sending This Text to DALLE:",textPrompt);
-        let imageArray : string[] = [];
         await axios.post('http://127.0.0.1:5000/api/get_image', {imagePrompt:textPrompt})
           .then(function (response) {
             console.log(response.data.image1);
@@ -186,27 +182,7 @@ function MainPage(currentPageInfo:stateHandler) {
         rerendertrialfunction(!rerendertrial);
     }
 
-    // Fill in this function to modify word document: Update, Moved to NavBar
-    // const generate = () =>  {
-    //     const doc = new Document({
-    //                     sections: [{
-    //                         properties: {},
-    //                         children: [
-    //                             new Paragraph({
-    //                                 children: [
-    //                                     new TextRun(typedText.current)
-    //                                 ],
-    //                              }),
-    //                         ],
-    //                      }]
-    //                 });
     
-    //     Packer.toBlob(doc).then(blob => {
-    //       console.log(blob);
-    //       saveAs(blob, "Book.docx");
-    //       console.log("Document created successfully");
-    //     });
-    //   };
 
     // Final App Page
     // FIX SELECTOR THING
@@ -240,7 +216,6 @@ function MainPage(currentPageInfo:stateHandler) {
                 className="textAreaImage"
                 onChange={textSaverPrompt} value={textPrompt} />
                 <Button className='GenerateImageButton' onClick={sendTextToBackendImage}>Generate Illustrations</Button>
-               {/* <textarea className="TextBoxImage" onChange={textSaverPrompt} value={textPrompt}/> */}
             </Row>
             <Row xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} >
               {imageMapperRow1}
@@ -251,14 +226,10 @@ function MainPage(currentPageInfo:stateHandler) {
             <Row xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} >
             {imageMapperRow2}
             </Row>
-            {/* <div className="SubmitButtonWrapper">
-            <Button className="Button GenerateImages" variant="primary" size="lg" onClick={sendTextToBackendImage}>Generate Illustrations</Button>
-            </div> */}
             
             </Col>
         </Row>
-                {/* require(JSON.stringify(generatedImages.image1)) */}
-                {/* <Pagination value={activePage} onChange={setPage} total={10} />; */}
+                
     </div>
   );
 }

@@ -1,8 +1,9 @@
-import { Navbar, Nav, Container,NavDropdown,Button,Offcanvas } from 'react-bootstrap';
+import { Navbar, Nav, Container,Button,Offcanvas } from 'react-bootstrap';
 import axios from "axios";
-import {Document,Paragraph,Packer,TextRun, SectionType,ImageRun } from 'docx';
+import {Document,Paragraph,Packer,ImageRun } from 'docx';
 import { saveAs } from "file-saver";
-// Highlight Current Tab
+
+
 interface stateHandler{
   pageNumber:number,
   textPrompt:string,
@@ -12,9 +13,10 @@ interface stateHandler{
   dataHandler:Function
 }
 
+
 function Navigation(childData:any){
-    console.log("Recieved in NavBar",childData)
-    // const [current,setCurrent] = useState('')
+    // console.log("Recieved in NavBar",childData)
+
     const resetChatGPT = async () =>{
         await axios.post('http://127.0.0.1:5000/api/reset_chatgpt', {chatGPT:'reset'})
           .then(function (response) {
@@ -26,58 +28,10 @@ function Navigation(childData:any){
     }
 
     
-
     const exportBook = async() => {
 
-      // Fetch Image from first page to test
-      // const blob = await fetch(
-      //   "https://cors-anywhere.herokuapp.com/"+states[0].imageList[0],{
-      //     method: "GET",
-      //     headers: {}
-      //   }
-      // ).then((r) => r.blob());
-  
-      // Putting Text from Every Page into a Paragraph 
       const paragraphArray: Paragraph[] = [];
       
-      // paragraphArray.push(new Paragraph({
-      //   children: [
-      //     new ImageRun({
-      //       data: await blob.arrayBuffer(),
-      //       transformation: {
-      //         width: 256,
-      //         height: 256,
-      //       },
-      //     }),
-      //   ],
-      // }));
-  
-      // paragraphArray.push(new Paragraph({
-      //   children: [
-      //     new ImageRun({
-      //       data: await blob.arrayBuffer(),
-      //       transformation: {
-      //         width: 256,
-      //         height: 256,
-      //       },
-      //     }),
-      //   ],
-      // }));
-  
-      // states.forEach(async (arrayItem:stateHandler)=>{
-      //   // paragraphArray.push(new Paragraph(arrayItem.typedText));
-      //   paragraphArray.push(new Paragraph({
-      //     children: [
-      //       new ImageRun({
-      //         data: await blob.arrayBuffer(),
-      //         transformation: {
-      //           width: 256,
-      //           height: 256,
-      //         },
-      //       }),
-      //     ],
-      //   }))
-      // })
       console.log(childData)
       for (let i in childData) {
         paragraphArray.push(new Paragraph(childData[i].typedText));
@@ -89,7 +43,7 @@ function Navigation(childData:any){
               headers: {}
             }
           ).then((r) => r.blob());
-  
+
           paragraphArray.push(new Paragraph({
             children: [
               new ImageRun({
@@ -122,6 +76,8 @@ function Navigation(childData:any){
         console.log('Document created successfully');
       });
     }
+
+
     return (
         <>
         <Navbar collapseOnSelect fixed='top' expand='false' bg='dark' variant='dark' >
@@ -150,18 +106,6 @@ function Navigation(childData:any){
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
-                {/* <Navbar.Collapse id='reponsive-navbar-nav'>
-                    
-                    <Nav className="ms-auto">
-                    <Nav.Item>
-                    <Button variant="outline-light" onClick={resetChatGPT}>Reset Language Model</Button>
-                    </Nav.Item>
-                    <Nav.Item>
-                    <Button variant="outline-light" onClick={resetChatGPT}>Reset Language Model</Button>
-                    </Nav.Item>
-                    </Nav>
-
-                </Navbar.Collapse> */}
             </Container>
         </Navbar>
         </>
