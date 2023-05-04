@@ -6,6 +6,8 @@ The user can generate suggested text to continue the story based on the current 
 
 The application currently uses GPT-3.5 Turbo for text generation and DALL-E 2 for Image Generation.
 
+Users will need their own OpenAI API Key and have to set that as an environment variable to run the application.
+
 ## How to Run Frontend:
 ```
   cd frontend
@@ -16,8 +18,10 @@ The application currently uses GPT-3.5 Turbo for text generation and DALL-E 2 fo
 ## How to Run Backend:
 ```
   cd backend
+  python3.8 -m venv venv
   souce venv/bin/activate
   pip3.8 install -r requirements.txt
+  export OPENAI_API_KEY= *INSERT KEY HERE*
   python3.8 server.py
 ```
 
